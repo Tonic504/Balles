@@ -8,20 +8,16 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class MainApplication extends Application {
+
+    static Stage stage;
     @Override
-    public void start(Stage stage) throws IOException {
-        //initialisation de toute les scenes
+    public void start(Stage sStage) throws IOException {
+
         FXMLLoader mainFxmlLoader = new FXMLLoader(MainApplication.class.getResource("main-view.fxml"));
-        Scene mainScene = new Scene(mainFxmlLoader.load(), 320, 240);
+        Scene mainScene = new Scene(mainFxmlLoader.load(), 1280, 720);
+        stage = sStage;
 
-        FXMLLoader animationFxmlLoader = new FXMLLoader(MainApplication.class.getResource("animation-view.fxml"));
-        Scene animationScene = new Scene(mainFxmlLoader.load(), 320, 240);
 
-        FXMLLoader ballesFxmlLoader = new FXMLLoader(MainApplication.class.getResource("balles-view.fxml"));
-        Scene ballesScene = new Scene(mainFxmlLoader.load(), 320, 240);
-
-        FXMLLoader objectFxmlLoader = new FXMLLoader(MainApplication.class.getResource("object-view.fxml"));
-        Scene objectScene = new Scene(mainFxmlLoader.load(), 320, 240);
 
         stage.setTitle("Hello!");
         stage.setScene(mainScene);
@@ -30,5 +26,14 @@ public class MainApplication extends Application {
 
     public static void main(String[] args) {
         launch();
+    }
+
+
+    static void changerScene(String fxml, String titreFenetre) throws IOException {
+        FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource(fxml));
+        Scene scene = new Scene(loader.load(),1280,720);
+
+        stage.setTitle(titreFenetre);
+        stage.setScene(scene);
     }
 }
