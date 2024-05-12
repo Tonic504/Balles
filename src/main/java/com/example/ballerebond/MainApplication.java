@@ -34,7 +34,7 @@ public class MainApplication extends Application {
 
 
 
-        stage.setTitle("Hello!");
+        stage.setTitle("Menu");
         stage.setScene(mainScene);
         stage.show();
     }

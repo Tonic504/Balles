@@ -1,31 +1,126 @@
 package com.example.ballerebond;
+
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Circle;
+import javafx.util.Duration;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class BallesController {
+
     @FXML
     private Pane zoneDeJeu;
 
+    private List<Balle> balles = new ArrayList<>();
+    private int vitesse = 5;
+    private boolean enPause = false;
+
+    private Timeline timeline;
+
     @FXML
     void ajouterBalles(ActionEvent event) {
+        Balle balle = new Balle(aleatoire(1000), aleatoire(500));
+        balles.add(balle);
+        zoneDeJeu.getChildren().add(balle);
+        if (timeline == null) {
+            timeline = new Timeline(new KeyFrame(Duration.millis(16), e -> deplacerBalles()));
+            timeline.setCycleCount(Timeline.INDEFINITE);
+            timeline.play();
+        }
+    }
+
+    private void deplacerBalles() {
+        if (!enPause) {
+            for (Balle balle : balles) {
+
+                double dx = vitesse * Math.cos(Math.toRadians(balle.direction));
+                double dy = vitesse * Math.sin(Math.toRadians(balle.direction));
+
+                double newX = balle.getCenterX() + dx;
+                double newY = balle.getCenterY() + dy;
+
+                if (newX - balle.getRadius() <= 0 || newX + balle.getRadius() >= zoneDeJeu.getWidth()) {
+                    balle.direction = 180 - balle.direction; // Inverser la direction horizontale
+                    dx = vitesse * Math.cos(Math.toRadians(balle.direction));
+                }
+                if (newY - balle.getRadius() <= 0 || newY + balle.getRadius() >= zoneDeJeu.getHeight()) {
+                    balle.direction = -balle.direction; // Inverser la direction verticale
+                    dy = vitesse * Math.sin(Math.toRadians(balle.direction));
+                }
+
+                balle.setCenterX(balle.getCenterX() + dx);
+                balle.setCenterY(balle.getCenterY() + dy);
+            }
+            verifierCollisions();
+        }
+    }
+
+    private void verifierCollisions() {
+        for (int i = 0; i < balles.size(); i++) {
+            Balle balle1 = balles.get(i);
+            for (int j = i + 1; j < balles.size(); j++) {
+                Balle balle2 = balles.get(j);
+                if (balle1.intersects(balle2.getBoundsInLocal())) {
+                    jouerPierrePapierCiseaux(balle1, balle2);
+                }
+            }
+        }
+    }
+
+    private void jouerPierrePapierCiseaux(Balle balle1, Balle balle2) {
+        Balle.Choix choix1 = balle1.getChoix();
+        Balle.Choix choix2 = balle2.getChoix();
+
+        if (choix1 == choix2) {
+            return; // Égalité
+        }
+
+        if ((choix1 == Balle.Choix.PIERRE && choix2 == Balle.Choix.CISEAUX) ||
+                (choix1 == Balle.Choix.PAPIER && choix2 == Balle.Choix.PIERRE) ||
+                (choix1 == Balle.Choix.CISEAUX && choix2 == Balle.Choix.PAPIER)) {
+            // balle1 gagne, balle2 perd
+            balle2.setImageView(balle1.getImageView());
+            balle2.setChoix(balle1.getChoix());
+        } else {
+            // balle2 gagne, balle1 perd
+            balle1.setImageView(balle2.getImageView());
+            balle1.setChoix(balle2.getChoix());
+        }
     }
 
     @FXML
-    void mettreEnPause(MouseEvent event) {
-
+    void mettreEnPause(ActionEvent event) {
+        enPause = true;
     }
 
     @FXML
-    void reprendreLeJeu(MouseEvent event) {
-
+    void reprendreLeJeu(ActionEvent event) {
+        enPause = false;
     }
 
     @FXML
     void retirerBalles(ActionEvent event) {
+        if (!balles.isEmpty()) {
+            Balle balle = balles.remove(balles.size() - 1);
+            zoneDeJeu.getChildren().remove(balle);
+        }
+    }
 
+    @FXML
+    void retourMenu(ActionEvent event) throws IOException {
+        MainApplication.changerScene("main-view.fxml","Menu");
+    }
+
+
+    private int aleatoire(int max){
+        Random rand = new Random();
+        return rand.nextInt(max +1);
     }
 }
