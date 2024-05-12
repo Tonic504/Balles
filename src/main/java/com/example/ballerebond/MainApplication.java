@@ -63,32 +63,31 @@ public class MainApplication extends Application {
             return;
         }
 
-        Cylinder cylindre = new Cylinder(100,100,100);
+        Cylinder cylindre = new Cylinder(300,300,300);
 
-        cylindre.setTranslateX(250);
-        cylindre.setTranslateY(100);
+        cylindre.setTranslateX(640);
+        cylindre.setTranslateY(360);
 
         cylindre.setRotationAxis(Rotate.X_AXIS);
-        cylindre.setRotate(30);
 
 
-        Cylinder millieu = new Cylinder(50,100,50);
-        millieu.setCullFace(CullFace.BACK);
-        millieu.setTranslateX(250);
-        millieu.setTranslateY(100);
+
+        Cylinder millieu = new Cylinder(150,500,150);
+
+        millieu.setTranslateX(640);
+        millieu.setTranslateY(360);
 
 
         boolean fixedEyeAtCameraZero = false;
         PerspectiveCamera camera = new PerspectiveCamera(fixedEyeAtCameraZero);
-        camera.setTranslateX(0);
-        camera.setTranslateY(-50);
+
 
 
         Group root = new Group(cylindre, millieu);
         root.setRotationAxis(Rotate.X_AXIS);
         root.setRotate(0);
 
-        Scene scene = new Scene(root, 500, 300, true);
+        Scene scene = new Scene(root, 1280, 720, true);
         scene.setCamera(camera);
         stage.setScene(scene);
         scene.setFill(Color.RED);
