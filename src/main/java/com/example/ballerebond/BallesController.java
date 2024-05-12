@@ -4,6 +4,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
@@ -26,9 +27,15 @@ public class BallesController {
 
     @FXML
     void ajouterBalles(ActionEvent event) {
-        Balle balle = new Balle(aleatoire(1000), aleatoire(500));
-        balles.add(balle);
-        zoneDeJeu.getChildren().add(balle);
+        Balle ballePierre = new Balle(redimmension(aleatoire(1000),1000), redimmension(aleatoire(500),500), Balle.Choix.PIERRE);
+        balles.add(ballePierre);
+        Balle balleFeuille = new Balle(redimmension(aleatoire(1000),1000), redimmension(aleatoire(500),500),  Balle.Choix.PAPIER);
+        balles.add(balleFeuille);
+        Balle balleCiseaux = new Balle(redimmension(aleatoire(1000),1000), redimmension(aleatoire(500),500),  Balle.Choix.CISEAUX);
+        balles.add(balleCiseaux);
+        zoneDeJeu.getChildren().add(ballePierre);
+        zoneDeJeu.getChildren().add(balleFeuille);
+        zoneDeJeu.getChildren().add(balleCiseaux);
         if (timeline == null) {
             timeline = new Timeline(new KeyFrame(Duration.millis(16), e -> deplacerBalles()));
             timeline.setCycleCount(Timeline.INDEFINITE);
@@ -67,7 +74,7 @@ public class BallesController {
             Balle balle1 = balles.get(i);
             for (int j = i + 1; j < balles.size(); j++) {
                 Balle balle2 = balles.get(j);
-                if (balle1.intersects(balle2.getBoundsInLocal())) {
+                if (balle1.getBoundsInParent().intersects(balle2.getBoundsInParent())) {
                     jouerPierrePapierCiseaux(balle1, balle2);
                 }
             }
@@ -78,7 +85,9 @@ public class BallesController {
         Balle.Choix choix1 = balle1.getChoix();
         Balle.Choix choix2 = balle2.getChoix();
 
+
         if (choix1 == choix2) {
+
             return; // Égalité
         }
 
@@ -86,22 +95,25 @@ public class BallesController {
                 (choix1 == Balle.Choix.PAPIER && choix2 == Balle.Choix.PIERRE) ||
                 (choix1 == Balle.Choix.CISEAUX && choix2 == Balle.Choix.PAPIER)) {
             // balle1 gagne, balle2 perd
-            balle2.setImageView(balle1.getImageView());
             balle2.setChoix(balle1.getChoix());
+            balle2.setImage2(balle1.getChoix());
+
+            System.out.println(choix1 + "/" + choix2);
         } else {
             // balle2 gagne, balle1 perd
-            balle1.setImageView(balle2.getImageView());
             balle1.setChoix(balle2.getChoix());
+            balle1.setImage2(balle2.getChoix());
+            System.out.println(choix1 + "/" + choix2);
         }
     }
 
     @FXML
-    void mettreEnPause(ActionEvent event) {
+    void mettreEnPause(MouseEvent event) {
         enPause = true;
     }
 
     @FXML
-    void reprendreLeJeu(ActionEvent event) {
+    void reprendreLeJeu(MouseEvent event) {
         enPause = false;
     }
 
@@ -122,5 +134,11 @@ public class BallesController {
     private int aleatoire(int max){
         Random rand = new Random();
         return rand.nextInt(max +1);
+    }
+
+    private int redimmension(int dim, int max){
+        if (dim<50){dim+=50;}
+        if (dim>max-50){dim-=50;}
+        return dim;
     }
 }

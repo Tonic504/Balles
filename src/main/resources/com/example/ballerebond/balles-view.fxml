@@ -20,7 +20,7 @@
             <Font size="33.0" />
          </font>
       </Label>
-      <Pane fx:id="zoneDeJeu" maxHeight="500.0" maxWidth="1000.0" minHeight="500.0" minWidth="1000.0" onMousePressed="#mettreEnPause" onMouseReleased="#reprendreLeJeu" prefHeight="500.0" prefWidth="1000.0" />
+      <Pane fx:id="zoneDeJeu" maxHeight="500.0" maxWidth="1000.0" minHeight="500.0" minWidth="1000.0" onMousePressed="#mettreEnPause" onMouseReleased="#reprendreLeJeu" prefHeight="500.0" prefWidth="1000.0" style="-fx-border-color: black;" />
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
             <Button alignment="CENTER" layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#ajouterBalles" prefHeight="100.0" prefWidth="270.0" text="Ajouter des Balles" />

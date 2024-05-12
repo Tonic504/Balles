@@ -22,9 +22,9 @@ public class Balle extends Circle {
     private Choix choix;
     public double direction;
 
-    public Balle(double x, double y) {
+    public Balle(double x, double y, Choix choix) {
         super(x, y, 20);
-        assignerChoixAleatoire();
+        this.choix = choix;
         initialiserImageView();
         direction = aleatoire(360);
     }
@@ -37,19 +37,19 @@ public class Balle extends Circle {
     private void initialiserImageView() {
         switch (choix) {
             case PIERRE:
-                imageView = new ImageView(PIERRE_IMAGE);
+                this.setFill(new ImagePattern(PIERRE_IMAGE));
                 break;
             case PAPIER:
-                imageView = new ImageView(PAPIER_IMAGE);
+                this.setFill(new ImagePattern(PAPIER_IMAGE));
                 break;
             case CISEAUX:
-                imageView = new ImageView(CISEAUX_IMAGE);
+                this.setFill(new ImagePattern(CISEAUX_IMAGE));
                 break;
         }
         // Ajustez ici la position de l'image par rapport au cercle
-        imageView.setX(getCenterX() - 10);
-        imageView.setY(getCenterY() - 10);
-        this.setFill(new ImagePattern(imageView.getImage()));
+        //imageView.setX(getCenterX() - 10);
+        //imageView.setY(getCenterY() - 10);
+
         this.setStroke(Color.BLACK);
     }
 
@@ -69,6 +69,20 @@ public class Balle extends Circle {
         this.setFill(new ImagePattern(image.getImage()));
     }
 
+    public void setImage2(Choix choix){
+        switch (choix) {
+            case PIERRE:
+                this.setFill(new ImagePattern(PIERRE_IMAGE));
+                break;
+            case PAPIER:
+                this.setFill(new ImagePattern(PAPIER_IMAGE));
+                break;
+            case CISEAUX:
+                this.setFill(new ImagePattern(CISEAUX_IMAGE));
+                break;
+        }
+    }
+
     public enum Choix {
         PIERRE, PAPIER, CISEAUX
     }
@@ -77,5 +91,6 @@ public class Balle extends Circle {
         Random rand = new Random();
         return rand.nextInt(max +1);
     }
+
 }
 
