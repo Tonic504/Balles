@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
+import javafx.scene.effect.BlendMode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Box;
 import javafx.scene.shape.CullFace;
@@ -62,19 +63,20 @@ public class MainApplication extends Application {
             return;
         }
 
-        Cylinder Cylindre = new Cylinder(100,100,100);
-        Cylindre.setCullFace(CullFace.NONE);
-        Cylindre.setTranslateX(250);
-        Cylindre.setTranslateY(100);
+        Cylinder cylindre = new Cylinder(100,100,100);
 
-        Cylindre.setRotationAxis(Rotate.X_AXIS);
-        Cylindre.setRotate(30);
+        cylindre.setTranslateX(250);
+        cylindre.setTranslateY(100);
+
+        cylindre.setRotationAxis(Rotate.X_AXIS);
+        cylindre.setRotate(30);
 
 
-        Sphere sphere = new Sphere(80);
+        Cylinder millieu = new Cylinder(50,100,50);
+        millieu.setCullFace(CullFace.BACK);
+        millieu.setTranslateX(250);
+        millieu.setTranslateY(100);
 
-        sphere.setTranslateX(250);
-        sphere.setTranslateY(100);
 
         boolean fixedEyeAtCameraZero = false;
         PerspectiveCamera camera = new PerspectiveCamera(fixedEyeAtCameraZero);
@@ -82,7 +84,7 @@ public class MainApplication extends Application {
         camera.setTranslateY(-50);
 
 
-        Group root = new Group(Cylindre, sphere);
+        Group root = new Group(cylindre, millieu);
         root.setRotationAxis(Rotate.X_AXIS);
         root.setRotate(0);
 
@@ -91,20 +93,17 @@ public class MainApplication extends Application {
         stage.setScene(scene);
         scene.setFill(Color.RED);
 
-        final Timeline timeline2 = new Timeline();
-
-        Rotate rotateX = new Rotate(0, Rotate.X_AXIS);
-        Rotate rotateY = new Rotate(0, Rotate.Y_AXIS);
 
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5),
-                new KeyValue(root.rotateProperty(), 360)),
+        Timeline timeline = new Timeline(
                 new KeyFrame(Duration.seconds(1),
-                        new KeyValue(root.rotateProperty(), 180))
+                        new KeyValue(root.rotateProperty(), 180)),
+                new KeyFrame(Duration.seconds(5),
+                        new KeyValue(root.rotateProperty(), 360))
         );
 
-        timeline.setCycleCount(4);
-        timeline.setAutoReverse(true);
+        timeline.setCycleCount(2);
+        timeline.setAutoReverse(true); //pour AutoReverse pensez à mettre un deuxième cycle
 
         timeline.play();
 
