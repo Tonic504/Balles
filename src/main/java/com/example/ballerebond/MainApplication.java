@@ -52,7 +52,7 @@ public class MainApplication extends Application {
         stage.setScene(scene);
     }
 
-    static void changerSceneObjet(String fxml, String titreFenetre) throws IOException {
+    static void changerSceneObjet(String titreFenetre) throws IOException {
 
 
         stage.setTitle(titreFenetre);

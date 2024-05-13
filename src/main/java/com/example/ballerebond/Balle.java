@@ -46,16 +46,12 @@ public class Balle extends Circle {
                 this.setFill(new ImagePattern(CISEAUX_IMAGE));
                 break;
         }
-        // Ajustez ici la position de l'image par rapport au cercle
-        //imageView.setX(getCenterX() - 10);
-        //imageView.setY(getCenterY() - 10);
+
 
         this.setStroke(Color.BLACK);
     }
 
-    public ImageView getImageView() {
-        return imageView;
-    }
+
 
     public Choix getChoix() {
         return choix;
@@ -65,11 +61,9 @@ public class Balle extends Circle {
         this.choix = choix;
     }
 
-    public void setImageView(ImageView image) {
-        this.setFill(new ImagePattern(image.getImage()));
-    }
 
-    public void setImage2(Choix choix){
+
+    public void setImage(Choix choix){
         switch (choix) {
             case PIERRE:
                 this.setFill(new ImagePattern(PIERRE_IMAGE));

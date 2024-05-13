@@ -6,7 +6,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -96,13 +95,13 @@ public class BallesController {
                 (choix1 == Balle.Choix.CISEAUX && choix2 == Balle.Choix.PAPIER)) {
             // balle1 gagne, balle2 perd
             balle2.setChoix(balle1.getChoix());
-            balle2.setImage2(balle1.getChoix());
+            balle2.setImage(balle1.getChoix());
 
             System.out.println(choix1 + "/" + choix2);
         } else {
             // balle2 gagne, balle1 perd
             balle1.setChoix(balle2.getChoix());
-            balle1.setImage2(balle2.getChoix());
+            balle1.setImage(balle2.getChoix());
             System.out.println(choix1 + "/" + choix2);
         }
     }

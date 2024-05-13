@@ -24,7 +24,7 @@ public class MainController {
 
     @FXML
     void demmarerObjet(ActionEvent event) throws IOException {
-        MainApplication.changerSceneObjet("object-view.fxml","Objet 3D");
+        MainApplication.changerSceneObjet("Objet 3D");
 
     }
 
