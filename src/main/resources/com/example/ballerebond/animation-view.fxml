@@ -16,7 +16,6 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-
 <VBox maxHeight="720.0" maxWidth="1280.0" minHeight="720.0" minWidth="1280.0" prefHeight="760.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ballerebond.AnimationController">
    <children>
       <HBox prefHeight="100.0" prefWidth="200.0">
@@ -43,7 +42,7 @@
          <children>
             <VBox alignment="CENTER" prefHeight="621.0" prefWidth="859.0">
                <children>
-                  <StackPane fx:id="Stackdisque" maxWidth="500.0" minWidth="500.0" prefHeight="621.0" prefWidth="500.0">
+                  <StackPane fx:id="stackDisque" maxWidth="500.0" minWidth="500.0" prefHeight="621.0" prefWidth="500.0">
                      <children>
                         <Circle fx:id="disque" radius="250.0" stroke="BLACK" strokeType="INSIDE" />
                         <ImageView fitHeight="500.0" fitWidth="500.0">
