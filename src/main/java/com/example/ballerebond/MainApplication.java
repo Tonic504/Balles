@@ -21,10 +21,21 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
-
+/**
+ * Classe principale, elle relie les controlleurs et les FXML pour son bon fonctionnement
+ * @author Thomas Chaussende
+ * @version 1.0.2
+ * @since 12/05/2024
+ */
 public class MainApplication extends Application {
 
     static Stage stage;
+
+    /**
+     * fonction qui creer la scene principale et le stage
+     * @param sStage
+     * @throws IOException
+     */
     @Override
     public void start(Stage sStage) throws IOException {
 
@@ -39,11 +50,20 @@ public class MainApplication extends Application {
         stage.show();
     }
 
+    /**
+     * fonction qui démarre l'application
+     * @param args
+     */
     public static void main(String[] args) {
         launch();
     }
 
-
+    /**
+     * fonction utilisé par les controllers pour changer de scène
+     * @param fxml
+     * @param titreFenetre
+     * @throws IOException
+     */
     static void changerScene(String fxml, String titreFenetre) throws IOException {
         FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource(fxml));
         Scene scene = new Scene(loader.load(),1280,720);
@@ -52,6 +72,11 @@ public class MainApplication extends Application {
         stage.setScene(scene);
     }
 
+    /**
+     * fonction pour changer spécifiquement vers l'objet 3D qui n'a pas de controlleur
+     * @param titreFenetre
+     * @throws IOException
+     */
     static void changerSceneObjet(String titreFenetre) throws IOException {
 
 

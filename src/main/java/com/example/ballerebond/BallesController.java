@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Controlleur pour gérer la scene des balles rebondissantes
+ */
 public class BallesController {
 
     @FXML
@@ -24,6 +27,10 @@ public class BallesController {
 
     private Timeline timeline;
 
+    /***
+     * permet de rajouter 3 balles dans le tableau
+     * @param event
+     */
     @FXML
     void ajouterBalles(ActionEvent event) {
         Balle ballePierre = new Balle(redimmension(aleatoire(1000),1000), redimmension(aleatoire(500),500), Balle.Choix.PIERRE);
@@ -42,6 +49,9 @@ public class BallesController {
         }
     }
 
+    /**
+     * permet de déplacer les balles dans la zone de jeu
+     */
     private void deplacerBalles() {
         if (!enPause) {
             for (Balle balle : balles) {
@@ -68,6 +78,9 @@ public class BallesController {
         }
     }
 
+    /**
+     * vérifie les colision et les fais jouer avec {@link #jouerPierrePapierCiseaux(Balle, Balle)}
+     */
     private void verifierCollisions() {
         for (int i = 0; i < balles.size(); i++) {
             Balle balle1 = balles.get(i);
@@ -80,6 +93,11 @@ public class BallesController {
         }
     }
 
+    /**
+     * fais jouer 2 balles à pierre feuille ciseaux, la balle perdante prend le statut de la gagnante, il ne ce passe rien si il y a égalité
+     * @param balle1
+     * @param balle2
+     */
     private void jouerPierrePapierCiseaux(Balle balle1, Balle balle2) {
         Balle.Choix choix1 = balle1.getChoix();
         Balle.Choix choix2 = balle2.getChoix();
@@ -106,16 +124,28 @@ public class BallesController {
         }
     }
 
+    /**
+     * permet de mettre en pause le jeu
+     * @param event
+     */
     @FXML
     void mettreEnPause(MouseEvent event) {
         enPause = true;
     }
 
+    /**
+     * permet de reprendre le jeu quand le clique de souris
+     * @param event
+     */
     @FXML
     void reprendreLeJeu(MouseEvent event) {
         enPause = false;
     }
 
+    /**
+     * permet de retirer la dernière balle
+     * @param event
+     */
     @FXML
     void retirerBalles(ActionEvent event) {
         if (!balles.isEmpty()) {
@@ -124,17 +154,32 @@ public class BallesController {
         }
     }
 
+    /**
+     * permet de retourner au menu principal
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void retourMenu(ActionEvent event) throws IOException {
         MainApplication.changerScene("main-view.fxml","Menu");
     }
 
-
+    /**
+     * fonction pour retourner un chiffre aléatoire entre un maximum et 0
+     * @param max
+     * @return
+     */
     private int aleatoire(int max){
         Random rand = new Random();
         return rand.nextInt(max +1);
     }
 
+    /**
+     * permet de redimmensionner l'endroit ou va apparaitre la balle pour éviter qu'elle soit dans le mur
+     * @param dim
+     * @param max
+     * @return
+     */
     private int redimmension(int dim, int max){
         if (dim<50){dim+=50;}
         if (dim>max-50){dim-=50;}
